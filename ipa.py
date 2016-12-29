@@ -12,7 +12,7 @@ from email.header import Header
 from datetime import date, time, datetime, timedelta
 
 #配置文件路径
-commendPath = "/Users/" + getpass.getuser() + "/"
+commendPath = sys.path[0] + "/"
 #commendFinderName = ".ipa_build_py"
 commendFullPath = sys.path[0]
 configFileName = "ipaBuildPyConfigFile.json"
@@ -20,8 +20,8 @@ commendFilePath = commendFullPath + "/" + configFileName
 
 #工程名
 targetName = None
-#临时文件夹名称
-tempFinder = None
+##临时文件夹名称
+#tempFinder = None
 #git地址
 gitPath = None
 #checkout后的本地路径
@@ -63,7 +63,7 @@ def showParameter():
 #设置参数
 def setParameter():
     global targetName
-    global tempFinder
+#    global tempFinder
     global mainPath
     global gitPath
     global certificateName
@@ -77,8 +77,8 @@ def setParameter():
     if not isNone(targetName):
         m = hashlib.md5()
         m.update('BossZP')
-        tempFinder = m.hexdigest()
-        mainPath = commendPath + 'Documents' + '/' + tempFinder
+#        tempFinder = m.hexdigest()
+        mainPath = commendPath + 'Documents'
     gitPath = raw_input("input gitPath:")
     certificateName = raw_input("input certificateName:")
     firToken = raw_input("input firToken:")
@@ -158,7 +158,6 @@ def initJsonFile():
     js["emailToUser"]      = None
     js["emailPassword"]    = None
     js["emailHost"]        = None
-    js["tempFinder"]       = None
     js["mainPath"]         = None
     js["keychainPassword"] = None
     outStr = json.dumps(js,ensure_ascii = False)
@@ -175,7 +174,6 @@ def readJsonFile():
         try:
             js = json.loads(line)
             global targetName
-            global tempFinder
             global mainPath
             global gitPath
             global certificateName
@@ -193,7 +191,6 @@ def readJsonFile():
             emailToUser = js["emailToUser"]
             emailPassword = js["emailPassword"]
             emailHost = js["emailHost"]
-            tempFinder = js["tempFinder"]
             mainPath = js["mainPath"]
             keychainPassword = js["keychainPassword"]
         except Exception,e:
@@ -216,7 +213,6 @@ def writeJsonFile():
         js["emailToUser"] = emailToUser
         js["emailPassword"] = emailPassword
         js["emailHost"] = emailHost
-        js["tempFinder"] = tempFinder
         js["mainPath"] = mainPath
         js["keychainPassword"] = keychainPassword
         outStr = json.dumps(js,ensure_ascii = False)
